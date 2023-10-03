@@ -1,0 +1,22 @@
+<nav class="navbar__container">
+    <div class="navbar__items-container">
+        <img class="navbar__logo" src="../../../../assets/img/hog-art-logo.png">
+        <a routerLink="/home"  class="navbar__link">
+          Home
+          <span [routerLinkActive]="['navbar__isActive']"></span>
+        </a>
+        <a routerLink="/carrinho"  class="navbar__link">
+          Carrinho
+          <span [routerLinkActive]="['navbar__isActive']"></span>
+        </a>
+        <a href="#responsive-header"  class="navbar__link">
+          Crie sua conta
+          <span [routerLinkActive]="['navbar__isActive']"></span>
+        </a>
+      
+        
+      </div>
+      <div>
+        <a routerLink="/login" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Login</a>
+      </div>
+  </nav>
