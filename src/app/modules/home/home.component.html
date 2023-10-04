@@ -1,2 +1,6 @@
-<!-- 
-<img src="../../../assets/img/hog-art-logo.png"> -->
+
+<div class="home__container">
+    <ng-container *ngFor="let product of (products$ | async)">
+        <app-product-card (click)="addToCart(product)" [product]="product"></app-product-card>
+    </ng-container>
+</div>

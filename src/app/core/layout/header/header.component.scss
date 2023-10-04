@@ -1,22 +1,41 @@
 
 
 .navbar{
-   
     &__container{
         display: flex;
         align-items: center;
         justify-content: space-between;
+        box-shadow: 0px 4px 13px black;
+        position: relative;
         background:rgb(116, 82, 108);
         padding:1rem 2rem;
         width: 100%;
     }
     &__link{
         font-family: 'Montserrat', sans-serif;
-        color: #ecd6ae;
         font-size: 1rem;
         font-weight: 400;
-        padding: 0 1rem;
-    }
+        margin: 0 1rem;   
+        padding: 0 1rem;   
+        color:#ecd6ae;
+        border-radius: 2px;
+          border: 3px solid;
+          border-image: repeating-linear-gradient(135deg#C89933 0 2px) ;
+          -webkit-mask: 
+            conic-gradient(from 180deg at top 3px right 3px, #0000 90deg,#000 0)
+             var(--_i,200%) 0  /200% var(--_i,3px) border-box no-repeat,
+            conic-gradient(at bottom 3px left  3px,  #0000 90deg,#000 0)
+             0   var(--_i,200%)/var(--_i,3px) 200% border-box no-repeat,
+            linear-gradient(#000 0 0) padding-box no-repeat;
+          transition: .3s, -webkit-mask-position .3s .3s;
+        
+        &:hover {
+          --_i: 100%;
+          color: #ecd6ae;
+          transition: .3s, -webkit-mask-size .3s .3s;
+        }
+      }
+  
     &__items-container{
         display: flex;
         align-items: center;
@@ -26,14 +45,9 @@
         }
     }
     &__isActive{
-        position: absolute;
-        transition: all .2s ease-in-out;
-        bottom: -1rem;
-        height: 0.2rem;
-        border-radius: 1rem;
-        left: 0;
-        width: 100%;
-        background: #ecd6ae;
+      --_i: 100%;
+      color: #ecd6ae;
+      transition: .3s, -webkit-mask-size .3s .3s;
     }
     &__logo{
        max-width:15.625rem;
@@ -44,5 +58,21 @@
         &:hover{
             box-shadow:  10px 10px 10px  black;
         }
+    }
+    &__btn{
+      position: relative;
+      .badge{
+        position: absolute;
+        width: 2rem;
+        height: 2rem;
+        background-color: #C89933;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: -0.8rem;
+        right: -1rem;
+    
+      }
     }
 }

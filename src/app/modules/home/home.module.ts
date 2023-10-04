@@ -2,18 +2,22 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home-rouitng-module';
-import { ProductsComponent } from './services/products/products.component';
+import { ProductsService } from './services/products.service';
+import { HttpClientModule } from '@angular/common/http'
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
 @NgModule({
   declarations: [
     HomeComponent,
-    ProductsComponent
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
-  ]
+    SharedModule,
+    HttpClientModule
+  ],
+  providers:[ProductsService]
 })
 export class HomeModule { }

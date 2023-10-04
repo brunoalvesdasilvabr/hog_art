@@ -1,22 +1,23 @@
 <nav class="navbar__container">
     <div class="navbar__items-container">
         <img class="navbar__logo" src="../../../../assets/img/hog-art-logo.png">
-        <a routerLink="/home"  class="navbar__link">
+        <a routerLink="/home"  class="navbar__link"  [routerLinkActive]="['navbar__isActive']">
           Home
-          <span [routerLinkActive]="['navbar__isActive']"></span>
         </a>
-        <a routerLink="/carrinho"  class="navbar__link">
-          Carrinho
-          <span [routerLinkActive]="['navbar__isActive']"></span>
-        </a>
-        <a href="#responsive-header"  class="navbar__link">
+        <a href="#responsive-header"  [routerLinkActive]="['navbar__isActive']" class="navbar__link">
           Crie sua conta
-          <span [routerLinkActive]="['navbar__isActive']"></span>
         </a>
+        <a routerLink="/login" [routerLinkActive]="['navbar__isActive']" class="navbar__link">
+          Login
+        </a>
+       
       
-        
+
       </div>
       <div>
-        <a routerLink="/login" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Login</a>
+        <button  routerLink="/carrinho" class="navbar__btn inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white  mt-4 lg:mt-0">
+           <i class="material-icons">shopping_cart</i>
+          <span  class="badge" *ngIf="shoppingCartStoreItems$ | async as shoppingCartStoreItems"> {{ shoppingCartStoreItems.length}}</span>
+        </button>
       </div>
   </nav>
