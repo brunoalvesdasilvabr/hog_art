@@ -17,7 +17,7 @@
       <div>
         <button  routerLink="/carrinho" class="navbar__btn inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white  mt-4 lg:mt-0">
            <i class="material-icons">shopping_cart</i>
-          <span  class="badge" *ngIf="shoppingCartStoreItems$ | async as shoppingCartStoreItems"> {{ shoppingCartStoreItems.length}}</span>
+          <span  class="badge" *ngIf="shoppingCartStoreItemsLength$ | async as shoppingCartStoreItemsLength"> {{ shoppingCartStoreItemsLength}}</span>
         </button>
       </div>
   </nav>

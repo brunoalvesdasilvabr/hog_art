@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProductInterface } from 'src/app/shared/interfaces/product.interface';
-import { ShoppingCartStoreService } from 'src/app/shared/stores/shopping-cart-store.service';
+import { ShoppingCartStoreService } from 'src/app/shared/stores/ShoppingCartStoreService';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  shoppingCartStoreItems$!:Observable<ProductInterface[]>
-  constructor(private shoppingCartStore:ShoppingCartStoreService){
-this.shoppingCartStoreItems$ = this.shoppingCartStore.shoppingCartItems$
-  }
+  shoppingCartStoreItemsLength$!: Observable<number>;
 
+  constructor(private shoppingCartStore: ShoppingCartStoreService) {
+    this.shoppingCartStoreItemsLength$ =
+      this.shoppingCartStore.shoppingCartItemsLength$;
+  }
 }

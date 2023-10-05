@@ -1,6 +1,13 @@
-
 <div class="home__container">
-    <ng-container *ngFor="let product of (products$ | async)">
-        <app-product-card (click)="addToCart(product)" [product]="product"></app-product-card>
-    </ng-container>
+  <ng-container *ngFor="let product of products$ | async">
+    <app-product-card
+      (click)="addToCart(product)"
+      [product]="product"
+    ></app-product-card>
+  </ng-container>
 </div>
+<p-toast
+  [breakpoints]="{ '920px': { width: '40%' } }"
+  [style]="{ 'font-size': '12px', width: '20%' }"
+  position="top-center"
+></p-toast>

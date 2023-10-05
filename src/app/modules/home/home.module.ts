@@ -3,21 +3,20 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home-rouitng-module';
 import { ProductsService } from './services/products.service';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
-
-
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-  ],
+  declarations: [HomeComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastModule,
   ],
-  providers:[ProductsService]
+  providers: [ProductsService, MessageService],
 })
-export class HomeModule { }
+export class HomeModule {}
