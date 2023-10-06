@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from './services/products.service';
 import { Observable, map, tap } from 'rxjs';
-import { ProductInterface } from 'src/app/shared/interfaces/product.interface';
+import {
+  ProductInterface,
+  ProductsByCategoryInterface,
+} from 'src/app/shared/interfaces/product.interface';
 import { ShoppingCartStoreService } from 'src/app/shared/stores/ShoppingCartStoreService';
 import { MessageService } from 'primeng/api';
 
@@ -11,7 +14,31 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  products$!: Observable<ProductInterface[]>;
+  products$!: Observable<ProductsByCategoryInterface[]>;
+
+  carouselAutoPLay: number = 4000;
+  responsiveOptions = [
+    {
+      breakpoint: '1199px',
+      numVisible: 4,
+      numScroll: 4,
+    },
+    {
+      breakpoint: '1021px',
+      numVisible: 3,
+      numScroll: 3,
+    },
+    {
+      breakpoint: '821px',
+      numVisible: 2,
+      numScroll: 2,
+    },
+    {
+      breakpoint: '571px',
+      numVisible: 1,
+      numScroll: 1,
+    },
+  ];
   constructor(
     private productsService: ProductsService,
     private shoppingCartSTore: ShoppingCartStoreService,
@@ -20,9 +47,29 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.products$ = this.productsService.getAllProducts().pipe(
-      map((res) => res),
+      map((res) => {
+        const productsByCategory = this.handleProductsByCategory(res);
+        return productsByCategory;
+      }),
       tap((res) => console.log(res))
     );
+  }
+
+  handleProductsByCategory(res: ProductInterface[]) {
+    const newObj: ProductsByCategoryInterface[] = [];
+    const arrayOfCategories = Array.from(new Set(res.map((el) => el.category)));
+    res.forEach((el, i) => {
+      const productsFiltered = res.filter(
+        (el) => el.category === arrayOfCategories[i]
+      );
+      if (productsFiltered && arrayOfCategories[i]) {
+        newObj.push({
+          category: arrayOfCategories[i],
+          items: productsFiltered,
+        });
+      }
+    });
+    return newObj;
   }
 
   addToCart(product: ProductInterface) {

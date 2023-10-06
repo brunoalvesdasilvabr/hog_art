@@ -1,12 +1,24 @@
-.home{
-    &__container{
+.home {
+  &__container {
     background-color: #ededed;
-    width: 100%;
-    display: grid;
-    padding:01rem;
-    gap:1rem;
-    grid-template-columns: repeat(auto-fit,minmax(15rem, 1fr));
-    height: auto;
-    cursor: pointer;
-    }
+    // width: 100%;
+    // display: grid;
+    // padding:01rem;
+    // gap:1rem;
+    // grid-template-columns: repeat(auto-fit,minmax(15rem, 1fr));
+    // height: auto;
+    // cursor: pointer;
+  }
+
+  &__category-title {
+    padding-top: 2rem;
+    font-size: 2rem;
+    font-family: "Montserrat";
+    color: #694966;
+  }
+}
+::ng-deep .p-carousel .p-carousel-content {
+  .p-carousel-items-content {
+    padding: 3rem 0;
+  }
 }

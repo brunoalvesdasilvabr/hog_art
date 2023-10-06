@@ -8,7 +8,11 @@
         <p>{{ product.price | currency : "BRL" : true }}</p>
       </div>
       <div class="duration">
-        <i title="adicionar ao carrinho" class="material-icons">
+        <i
+          (click)="addToCart(product)"
+          title="adicionar ao carrinho"
+          class="material-icons"
+        >
           add_shopping_cart
         </i>
       </div>

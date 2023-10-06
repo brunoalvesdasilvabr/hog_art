@@ -9,25 +9,21 @@ export class ShoppingCartStoreService {
   private _shoppingCartItems = new BehaviorSubject<ProductInterface[]>([]);
   public shoppingCartItems$ = this._shoppingCartItems.asObservable();
 
-  private _shoppingCartItemsLength$ = new BehaviorSubject<number>(0);
-  public shoppingCartItemsLength$ =
-    this._shoppingCartItemsLength$.asObservable();
-
   constructor() {}
 
+  get Total(): number {
+    return this.calculateTotalPrice();
+  }
+
+  get getshoppingCartItemsValue(): ProductInterface[] {
+    return this._shoppingCartItems.getValue();
+  }
+
   calcItemQuantity(product: ProductInterface) {
-    let cartItems = [...this._shoppingCartItems.getValue()];
-    const item = cartItems.find((cartEl) => cartEl.id === product.id);
-    if (item) {
-      item.quantity!++;
-      item.price *= item.quantity!;
-    } else {
-      cartItems.push({ ...product, quantity: 1 });
-    }
-    this._shoppingCartItems.next(cartItems);
+    this.handlecalcItemQuantity(product);
 
     // let productFound = false;
-    // const quantityCalc = this._shoppingCartItems.getValue().map((cartEl) => {
+    // const quantityCalc = this.getshoppingCartItemsValue.map((cartEl) => {
     //   if (cartEl.id === product.id) {
     //     cartEl.quantity!++;
     //     productFound = true;
@@ -38,23 +34,63 @@ export class ShoppingCartStoreService {
     // });
     // const result = productFound ? quantityCalc : [...quantityCalc, { ...product, quantity: 1 }];
     // this._shoppingCartItems.next(result);
-    // console.log(this._shoppingCartItems.getValue());
+    // console.log(this.getshoppingCartItemsValue);
   }
 
-  incrementCartItemsLength(): void {
-    let itemsAddedToCart = this._shoppingCartItemsLength$.getValue();
-    itemsAddedToCart++;
-    this._shoppingCartItemsLength$.next(itemsAddedToCart);
+  addOrRemoveQuantity(product: ProductInterface, add: boolean) {
+    this.handleAddOrRemove(product, add);
   }
 
   addItem(product: ProductInterface): void {
-    this.incrementCartItemsLength();
-
-    const iArrayEmpty = this._shoppingCartItems.getValue().length;
+    this.setInicialCalculatedPrice(product);
+    const iArrayEmpty = this.getshoppingCartItemsValue.length;
     if (!iArrayEmpty) {
       this._shoppingCartItems.next([{ ...product, quantity: 1 }]);
     } else {
       this.calcItemQuantity(product);
     }
+  }
+
+  removeProduct(product: ProductInterface) {
+    const productRemoved = this._shoppingCartItems
+      .getValue()
+      .filter((el) => el.id !== product.id);
+    this._shoppingCartItems.next(productRemoved);
+  }
+
+  private calculateTotalPrice(): number {
+    return this._shoppingCartItems
+      .getValue()
+      .map((product) => product.price * product.quantity!)
+      .reduce((prev, current) => prev + current, 0);
+  }
+
+  private setInicialCalculatedPrice(product: ProductInterface) {
+    product.calculatedPrice = product.price;
+  }
+
+  private handlecalcItemQuantity(product: ProductInterface) {
+    let cartItems = [...this.getshoppingCartItemsValue];
+    const item = cartItems.find((cartEl) => cartEl.id === product.id);
+    if (item) {
+      item.quantity!++;
+      item.calculatedPrice = item.price * item.quantity!;
+    } else {
+      cartItems.push({ ...product, quantity: 1 });
+    }
+    this._shoppingCartItems.next(cartItems);
+  }
+
+  private handleAddOrRemove(product: ProductInterface, add: boolean) {
+    let cartArray = [...this.getshoppingCartItemsValue];
+    const productToAddQnt = cartArray.filter((items) => items.id == product.id);
+    add ? productToAddQnt[0].quantity!++ : productToAddQnt[0].quantity!--;
+    productToAddQnt[0].calculatedPrice =
+      productToAddQnt[0].price * productToAddQnt[0].quantity!;
+    console.log({ productToAddQnt });
+    if (productToAddQnt[0].quantity! === 0) {
+      cartArray = cartArray.filter((items) => items.id !== product.id);
+    }
+    this._shoppingCartItems.next(cartArray);
   }
 }

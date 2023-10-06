@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { CarouselModule } from 'primeng/carousel';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -16,6 +17,7 @@ import { MessageService } from 'primeng/api';
     SharedModule,
     HttpClientModule,
     ToastModule,
+    CarouselModule,
   ],
   providers: [ProductsService, MessageService],
 })

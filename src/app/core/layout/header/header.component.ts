@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { ShoppingCartStoreService } from 'src/app/shared/stores/ShoppingCartStoreService';
 
 @Component({
@@ -12,6 +12,8 @@ export class HeaderComponent {
 
   constructor(private shoppingCartStore: ShoppingCartStoreService) {
     this.shoppingCartStoreItemsLength$ =
-      this.shoppingCartStore.shoppingCartItemsLength$;
+      this.shoppingCartStore.shoppingCartItems$.pipe(
+        map((productsArray) => productsArray.length)
+      );
   }
 }
