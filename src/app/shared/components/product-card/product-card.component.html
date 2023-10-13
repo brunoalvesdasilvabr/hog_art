@@ -1,7 +1,13 @@
-<div class="nft">
+<div class="card nft" title="{{ product.title }}">
   <div class="main">
-    <img class="tokenImage" [src]="product.image" [alt]="product.title" />
-    <h2>{{ product.title.slice(0, 24) }}</h2>
+    <div class="card__image-container">
+      <img
+        class="card__tokenImage"
+        [src]="product.image"
+        [alt]="product.title"
+      />
+    </div>
+    <h2>{{ product.title.slice(0, 20) }}</h2>
     <p class="description">{{ product.description }}</p>
     <div class="tokenInfo">
       <div class="price">
@@ -17,12 +23,11 @@
         </i>
       </div>
     </div>
-    <hr />
-    <!-- <div class='creator'>
-        <div class='wrapper'>
-          <img src="https://images.unsplash.com/photo-1620121692029-d088224ddc74?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80" alt="Creator" />
-        </div>
-        <p><ins>Creation of</ins> Kiberbash</p>
-      </div> -->
   </div>
+  <a
+    class="card-btn"
+    (click)="setItemToStorage(product)"
+    routerLink="/home/detalhes/{{ product.title }}"
+    >Ver Detalhes</a
+  >
 </div>

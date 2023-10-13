@@ -10,3 +10,14 @@
 body {
   cursor: url("../src/assets/img/wand.png");
 }
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

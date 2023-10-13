@@ -1,9 +1,13 @@
 <ng-container *ngIf="shoppingCartItems$ | async as products">
-  <p-table [value]="products" [tableStyle]="{ 'min-width': '25rem' }">
+  <p-table
+    *ngIf="products.length"
+    [value]="products"
+    [tableStyle]="{ 'min-width': '25rem' }"
+  >
     <ng-template pTemplate="caption">
-      <div class="flex align-items-center justify-content-between">
-        Products
-      </div>
+      <!-- <div class="flex align-items-center justify-content-between">
+        Produtos
+      </div> -->
     </ng-template>
     <ng-template pTemplate="header">
       <tr>

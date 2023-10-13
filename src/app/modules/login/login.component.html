@@ -1,1 +1,36 @@
-<p>login works!</p>
+<button class="back-btn" mat-raised-button routerLink="/home">Voltar</button>
+
+<div class="login__container">
+  <div class="login__overlay-container"></div>
+  <div class="login__form-container">
+    <form class="login__form" (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input formControlName="email" type="email" matInput />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Senha</mat-label>
+        <input formControlName="password" type="password" matInput />
+      </mat-form-field>
+      <span
+        class="text-danger"
+        *ngIf="
+                          (loginFormControl.password.touched ) &&
+                          loginFormControl.password.errors?.['required']|| loginFormControl.password.errors?.['invalidPassword']
+                        "
+      >
+        Digite uma senha Válida. A senha precisa conter. O mínimo de 8
+        caracteres. Ao menos 1 letra maiúscula. Ao menos 1 letra minuscula. Ao
+        menos 1 número.
+      </span>
+      <button
+        [disabled]="!loginForm.valid"
+        type="submit"
+        mat-raised-button
+        color="primary"
+      >
+        Entrar
+      </button>
+    </form>
+  </div>
+</div>
