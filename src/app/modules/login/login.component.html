@@ -17,10 +17,10 @@
         <input formControlName="confirmPassword" type="password" matInput />
       </mat-form-field>
 
-      <!-- <app-error-message
-        *ngIf="loginFormControl.confirmPassword.errors?.['notSame']"
-        [errorMessage]="'Senhas não estão iguais'"
-      ></app-error-message> -->
+      <app-error-message
+        *ngIf="hasMatchError"
+        [errorMessage]="'Senhas devem ser iguais'"
+      ></app-error-message>
       <span
         class="text-danger"
         *ngIf="
@@ -44,7 +44,7 @@
         mat-raised-button
         color="primary"
       >
-        Entrar
+        {{ userAction === "login" ? "Entrar" : "Criar Conta" }}
       </button>
     </form>
   </div>

@@ -20,29 +20,37 @@ import { ErrorStoreService } from 'src/app/shared/stores/error-store/error-store
 })
 export class LoginComponent implements OnDestroy, OnInit {
   errorMessage$!: Observable<ErrorInterface>;
+  hasMatchError = false;
   userAction!: 'login' | 'signup';
-  loginForm = new FormGroup({
+  loginForm: FormGroup<{
+    email: FormControl<string | null>;
+    password: FormControl<string | null>;
+    confirmPassword?: FormControl<string | null>;
+  }> = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
       Validators.required,
       this.patternValidator(),
+      this.matchValidator('confirmPassword', true),
     ]),
   });
 
   constructor(
     private authService: AuthService,
     private errorStore: ErrorStoreService,
-    private router: Router,
     private route: ActivatedRoute
   ) {
     this.errorMessage$ = this.errorStore.errorContent$;
   }
   ngOnInit(): void {
     this.userAction = this.route.snapshot.queryParams['action'];
+    this.AddConfirmPasswordControl();
+
+    console.log('useraction', this.userAction);
     this.loginForm.valueChanges.subscribe(() => {
       this.errorStore.clearError();
     });
-    // this.AddConfirmPasswordControl()
+    this.handleErrorConfirmPassword();
   }
   ngOnDestroy(): void {
     this.errorStore.clearError();
@@ -63,26 +71,41 @@ export class LoginComponent implements OnDestroy, OnInit {
         };
       });
   }
-  // private AddConfirmPasswordControl(){
-  //   if (this.userAction === 'signup') {
-  //     this.loginForm.addControl(
-  //       'confirmPassword',
-  //       new FormControl('', [
-  //         Validators.required,
-  //         this.patternValidator(),
-  //         this.checkPasswords(),
-  //       ])
-  //     );
-  //   }
-  // }
-  private checkPasswords(): ValidatorFn {
-    return (group: AbstractControl): { [key: string]: any } | null => {
-      // group.setValidators(Validators.required);
-      let pass = group.parent?.value.password;
-      let confirmPass = group.value;
-
-      return pass === confirmPass ? null : { notSame: true };
-      return {};
+  private handleErrorConfirmPassword() {
+    this.loginForm.controls.confirmPassword?.valueChanges.subscribe(() => {
+      if (this.loginFormControl.confirmPassword!.errors?.['matching']) {
+        this.hasMatchError = true;
+      } else {
+        this.hasMatchError = false;
+      }
+    });
+  }
+  private AddConfirmPasswordControl() {
+    if (this.userAction === 'signup') {
+      this.loginForm.addControl(
+        'confirmPassword',
+        new FormControl('', [
+          Validators.required,
+          this.patternValidator(),
+          this.matchValidator('password'),
+        ])
+      );
+    }
+  }
+  private matchValidator(matchTo: string, reverse?: boolean): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control.parent && reverse) {
+        const c = (control.parent?.controls as any)[matchTo] as AbstractControl;
+        if (c) {
+          c.updateValueAndValidity();
+        }
+        return null;
+      }
+      return !!control.parent &&
+        !!control.parent.value &&
+        control.value === (control.parent?.controls as any)[matchTo].value
+        ? null
+        : { matching: true };
     };
   }
 
