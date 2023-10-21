@@ -6,7 +6,7 @@
 }
 .card {
   user-select: none;
-  max-width: 236px;
+  max-width: 90%;
   display: grid;
   border: 1px solid #ffffff22;
   background-color: #282c34;
@@ -15,32 +15,7 @@
     rgba(40, 44, 52, 1) 0%,
     rgba(17, 0, 32, 0.5) 100%
   );
-  // box-shadow: 0 7px 20px 5px #00000088;
-  border-radius: 0.7rem;
-  backdrop-filter: blur(7px);
-  -webkit-backdrop-filter: blur(7px);
-  overflow: hidden;
-  transition: 0.5s all;
-
-  h2 {
-    font-size: 1rem;
-    margin: 0;
-  }
-
-  &__tokenImage {
-    border-radius: 0.5rem;
-    max-width: 100%;
-    width: 100%;
-    height: 8rem;
-    object-fit: cover;
-  }
-}
-
-.nft {
-  ins {
-    text-decoration: none;
-  }
-  .main {
+  &__main {
     display: flex;
     flex-direction: column;
     padding: 1rem;
@@ -114,6 +89,25 @@
       }
     }
   }
+  // box-shadow: 0 7px 20px 5px #00000088;
+  border-radius: 0.7rem;
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  overflow: hidden;
+  transition: 0.5s all;
+
+  h2 {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  &__tokenImage {
+    border-radius: 0.5rem;
+    max-width: 100%;
+    width: 100%;
+    height: 8rem;
+    object-fit: cover;
+  }
   ::before {
     position: fixed;
     content: "";
@@ -134,16 +128,5 @@
       top: -100%;
       left: 200%;
     }
-  }
-}
-
-.bg {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  h1 {
-    font-size: 20rem;
-    filter: opacity(0.5);
   }
 }

@@ -16,7 +16,6 @@ export class StorageService {
   }
 
   public set(key: string, value: unknown): void {
-    console.log({ value });
     const data = JSON.stringify(value);
     localStorage.setItem(key, data);
   }

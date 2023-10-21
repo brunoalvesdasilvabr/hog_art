@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -16,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
+    SharedModule,
   ],
 })
 export class LoginModule {}

@@ -1,4 +1,4 @@
-<button class="back-btn" mat-raised-button routerLink="/home">Voltar</button>
+<button class="back-btn" routerLink="/home">Voltar</button>
 
 <div class="login__container">
   <div class="login__overlay-container"></div>
@@ -12,6 +12,15 @@
         <mat-label>Senha</mat-label>
         <input formControlName="password" type="password" matInput />
       </mat-form-field>
+      <mat-form-field *ngIf="userAction === 'signup'">
+        <mat-label>Confirme a senha</mat-label>
+        <input formControlName="confirmPassword" type="password" matInput />
+      </mat-form-field>
+
+      <!-- <app-error-message
+        *ngIf="loginFormControl.confirmPassword.errors?.['notSame']"
+        [errorMessage]="'Senhas não estão iguais'"
+      ></app-error-message> -->
       <span
         class="text-danger"
         *ngIf="
@@ -23,6 +32,12 @@
         caracteres. Ao menos 1 letra maiúscula. Ao menos 1 letra minuscula. Ao
         menos 1 número.
       </span>
+      <ng-container *ngIf="errorMessage$ | async as errorMessage">
+        <app-error-message
+          *ngIf="errorMessage.error"
+          [errorMessage]="errorMessage.message"
+        ></app-error-message>
+      </ng-container>
       <button
         [disabled]="!loginForm.valid"
         type="submit"

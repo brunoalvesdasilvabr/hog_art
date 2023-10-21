@@ -43,8 +43,8 @@ export class ShoppingCartStoreService {
 
   addItem(product: ProductInterface): void {
     this.setInicialCalculatedPrice(product);
-    const iArrayEmpty = this.getshoppingCartItemsValue.length;
-    if (!iArrayEmpty) {
+    const isCartItemsEmpty = this.getshoppingCartItemsValue.length;
+    if (!isCartItemsEmpty) {
       this._shoppingCartItems.next([{ ...product, quantity: 1 }]);
     } else {
       this.calcItemQuantity(product);

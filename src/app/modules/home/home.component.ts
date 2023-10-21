@@ -16,7 +16,7 @@ import { MessageService } from 'primeng/api';
 export class HomeComponent implements OnInit {
   products$!: Observable<ProductsByCategoryInterface[]>;
 
-  carouselAutoPLay: number = 4000;
+  carouselAutoPLay: number = 10000;
   responsiveOptions = [
     {
       breakpoint: '1199px',
@@ -29,12 +29,12 @@ export class HomeComponent implements OnInit {
       numScroll: 3,
     },
     {
-      breakpoint: '821px',
+      breakpoint: '775px',
       numVisible: 2,
       numScroll: 2,
     },
     {
-      breakpoint: '571px',
+      breakpoint: '545px',
       numVisible: 1,
       numScroll: 1,
     },
@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit {
     this.products$ = this.productsService.getAllProducts().pipe(
       map((res) => {
         const productsByCategory = this.handleProductsByCategory(res);
+        console.log({ productsByCategory });
         return productsByCategory;
       }),
       tap((res) => console.log(res))

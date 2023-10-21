@@ -1,8 +1,12 @@
 .back-btn {
   position: absolute;
   top: 2%;
-  left: 5%;
+  left: 2%;
   z-index: 9;
+  background: #5c415d;
+  color: #ecd6ae;
+  padding: 1rem;
+  border-radius: 8px;
 }
 .login {
   &__container {

@@ -13,6 +13,7 @@ export class ProductCardComponent {
   @Output() productToAdded = new EventEmitter<ProductInterface>();
   constructor(private storage: StorageService) {}
   addToCart(product: ProductInterface) {
+    console.log({ product });
     this.productToAdded.emit(product);
   }
   setItemToStorage(product: ProductInterface) {

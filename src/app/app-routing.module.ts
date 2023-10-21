@@ -5,6 +5,7 @@ import { HomeComponent } from './modules/home/home.component';
 import { ShoppingCartComponent } from './modules/shopping-cart/shopping-cart.component';
 import { LayoutComponent } from './core/layout/layout.component';
 import { LoginComponent } from './modules/login/login.component';
+import { AdminGuard } from './core/guards/admin-guard.guard';
 
 const routes: Routes = [
   {
@@ -31,6 +32,13 @@ const routes: Routes = [
       import('../app/modules/shopping-cart/shopping-cart.module').then(
         (m) => m.ShoppingCartModule
       ),
+  },
+  {
+    path: 'admin',
+    component: LayoutComponent,
+    canActivate: [AdminGuard],
+    loadChildren: () =>
+      import('../app/modules/admin/admin.module').then((m) => m.AdminModule),
   },
   // { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
 ];

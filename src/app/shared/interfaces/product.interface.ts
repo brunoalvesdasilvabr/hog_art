@@ -2,10 +2,10 @@ export interface ProductInterface {
   category: string;
   description: string;
   id: number;
-  image: string;
+  image: string[];
   price: number;
   quantity?: number;
-  rating: { rate: 3.9; count: 120 };
+  rating: { rate: number; count: number };
   title: string;
   calculatedPrice: number;
 }
