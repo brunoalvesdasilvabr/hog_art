@@ -2,7 +2,30 @@
 
 <div class="login__container">
   <div class="login__overlay-container"></div>
-  <div class="login__form-container">
+  <div *ngIf="showCodeForm" class="login__form-container">
+    <form
+      class="login__form"
+      (ngSubmit)="SubmitCodeForm()"
+      [formGroup]="codeForm"
+    >
+      <mat-form-field>
+        <mat-label>Digite o Codigo recebido no email</mat-label>
+        <input formControlName="code" type="text" matInput />
+      </mat-form-field>
+      <button
+        [disabled]="!codeForm.valid"
+        type="submit"
+        mat-raised-button
+        color="primary"
+      >
+        Enviar
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="!showCodeForm" class="login__form-container">
+    <h1>{{ userAction === "login" ? "Faça o login" : "Crie sua Conta" }}</h1>
+
     <form class="login__form" (ngSubmit)="onSubmit()" [formGroup]="loginForm">
       <mat-form-field>
         <mat-label>Email</mat-label>
@@ -49,3 +72,4 @@
     </form>
   </div>
 </div>
+<p-toast position="top-center"></p-toast>

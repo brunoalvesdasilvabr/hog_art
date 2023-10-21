@@ -47,8 +47,12 @@ export class AuthService {
     });
   }
 
-  public confirmSignUp(form: FormGroup): Promise<any> {
-    return Auth.confirmSignUp(form.value.email, form.value.code);
+  public confirmSignUp(
+    loginForm: FormGroup,
+    codeForm: FormGroup
+  ): Promise<any> {
+    console.log({ loginForm }, { codeForm });
+    return Auth.confirmSignUp(loginForm.value.email, codeForm.value.code);
   }
   public signOut(): Promise<any> {
     return Auth.signOut().then(() => {
