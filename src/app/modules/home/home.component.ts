@@ -68,6 +68,7 @@ export class HomeComponent implements OnInit {
         (el) => el.category === arrayOfCategories[i]
       );
       if (productsFiltered && arrayOfCategories[i]) {
+        console.log({ productsFiltered });
         newObj.push({
           category: arrayOfCategories[i],
           items: productsFiltered,

@@ -12,44 +12,47 @@ import { ProductInterface } from 'src/app/shared/interfaces/product.interface';
   styleUrls: ['./create-product.component.scss'],
 })
 export class CreateProductComponent implements OnInit {
-  @ViewChild('fileUpload') fileUpload!: FileUpload;
   product!: ProductInterface;
-  createProductForm = new FormGroup(
-    {
-      title: new FormControl('', Validators.required),
-      price: new FormControl(0, Validators.required),
-      description: new FormControl('', Validators.required),
-      image: new FormControl<any>('', Validators.required),
-      category: new FormControl('', Validators.required),
-    },
-    { validators: Validators.required }
-  );
+  createProductForm = new FormGroup({
+    title: new FormControl('', Validators.required),
+    price: new FormControl(0, Validators.required),
+    description: new FormControl('', Validators.required),
+    fileUpload: new FormControl<Event>({} as Event, Validators.required),
+    category: new FormControl('', Validators.required),
+  });
   constructor(private messageService: MessageService) {}
   ngOnInit(): void {
     this.createProductForm.valueChanges.subscribe((res) => {
+      console.log(!!res.fileUpload!.target);
       console.log({ res });
       this.product = {
         title: res.title!,
         price: res.price!,
-        image: this.convertImageToBase64String(res.image!),
+        image: this.fileImageToBase64String(res.fileUpload!),
         category: res.category!,
         description: res.description!,
       };
     });
   }
 
-  convertImageToBase64String(filesEvent: any): string[] {
-    console.log('Valores', Object.values(filesEvent.target.files));
-    const UploadImages: string[] = [];
-    Object.keys(filesEvent.target.files).forEach((i) => {
-      const file = filesEvent.target.files[i];
-      const reader = new FileReader();
-      reader.onload = (e) => UploadImages.push(e.target?.result as string);
+  private fileImageToBase64String(filesEvent: Event): string[] {
+    if (!!filesEvent.target) {
+      const UploadedImages: string[] = [];
+      const eventTarget = filesEvent.currentTarget as HTMLInputElement;
+      Object.keys(eventTarget.files!).forEach((key) => {
+        const file: File = eventTarget.files![
+          key as keyof typeof eventTarget.files
+        ] as File;
+        const reader = new FileReader();
+        reader.onload = (e) => UploadedImages.push(e.target?.result as string);
 
-      reader.readAsDataURL(file);
-    });
-    console.log({ UploadImages });
-    return UploadImages;
+        reader.readAsDataURL(file);
+      });
+      console.log({ UploadedImages });
+      return UploadedImages;
+    } else {
+      return [];
+    }
   }
   SubmitProduct() {
     console.log(this.createProductForm.value);

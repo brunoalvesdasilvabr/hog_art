@@ -28,11 +28,13 @@ export class FileUploadComponent implements ControlValueAccessor {
   fileUpload!: ElementRef;
   files: FileUploadInterface[] = [];
 
-  writeValue(obj: FileUploadInterface[]): void {
+  writeValue(obj: any): void {
     this.files = obj;
     // throw new Error('Method not implemented.');
   }
   registerOnChange(fn: any): void {
+    console.log(this.files);
+    console.log({ fn });
     this.onFileSelected = fn;
     // throw new Error('Method not implemented.');
   }
@@ -47,17 +49,17 @@ export class FileUploadComponent implements ControlValueAccessor {
   }
 
   onFileSelected(event: any) {
-    console.log({ event });
-
-    if (event.target.files.length > 0) {
-      this.files = event.target.files;
-      var reader = new FileReader();
-      reader.onload = (e) => {
-        console.log({ e });
-        this.imgSrc = reader.result as string;
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
+    // console.log({ event });
+    // if (event.target.files.length > 0) {
+    //   console.log('aqui', event.target.files);
+    //   this.files = event.target.files;
+    //   var reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     console.log({ e });
+    //     this.imgSrc = reader.result as string;
+    //   };
+    //   reader.readAsDataURL(event.target.files[0]);
+    // }
   }
   removeFile(event: Event) {}
 }

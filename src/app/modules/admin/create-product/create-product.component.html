@@ -6,8 +6,12 @@
       <input formControlName="title" type="text" matInput />
     </mat-form-field>
     <mat-form-field>
+      <mat-label>Descrição do Produto</mat-label>
+      <input formControlName="description" type="text" matInput />
+    </mat-form-field>
+    <mat-form-field>
       <mat-label>Preço </mat-label>
-      <input formControlName="price" type="text" matInput />
+      <input formControlName="price" type="number" matInput />
     </mat-form-field>
     <mat-form-field>
       <mat-label>Select</mat-label>
@@ -21,7 +25,7 @@
     </mat-form-field>
     <app-file-upload
       [label]="'Escolha as fotos do produto'"
-      formControlName="image"
+      formControlName="fileUpload"
     ></app-file-upload>
     <button
       [disabled]="!createProductForm.valid"
@@ -33,5 +37,5 @@
     </button>
   </form>
 
-  <!-- <app-product-card [product]="product"></app-product-card> -->
+  <app-product-card *ngIf="product" [product]="product"></app-product-card>
 </div>
