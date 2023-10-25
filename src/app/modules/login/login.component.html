@@ -12,6 +12,12 @@
         <mat-label>Digite o Codigo recebido no email</mat-label>
         <input formControlName="code" type="text" matInput />
       </mat-form-field>
+      <ng-container *ngIf="errorMessage$ | async as errorMessage">
+        <app-error-message
+          *ngIf="errorMessage.error"
+          [errorMessage]="errorMessage.message"
+        ></app-error-message>
+      </ng-container>
       <button
         [disabled]="!codeForm.valid"
         type="submit"

@@ -7,6 +7,7 @@ import {
 } from 'src/app/shared/interfaces/product.interface';
 import { ShoppingCartStoreService } from 'src/app/shared/stores/ShoppingCartStoreService';
 import { MessageService } from 'primeng/api';
+import { UserStoreService } from 'src/app/core/store/user-store/user-store.service';
 
 @Component({
   selector: 'app-home',
@@ -42,8 +43,11 @@ export class HomeComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
     private shoppingCartSTore: ShoppingCartStoreService,
-    private toast: MessageService
-  ) {}
+    private toast: MessageService,
+    private userStore: UserStoreService
+  ) {
+    this.userStore.getUser;
+  }
 
   ngOnInit(): void {
     this.products$ = this.productsService.getAllProducts().pipe(

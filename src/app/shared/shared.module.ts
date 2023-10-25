@@ -3,12 +3,18 @@ import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { RouterModule } from '@angular/router';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { MatButtonModule } from '@angular/material/button';
 
-const components = [ProductCardComponent, ErrorMessageComponent];
+const components = [
+  ProductCardComponent,
+  ErrorMessageComponent,
+  FileUploadComponent,
+];
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatButtonModule],
   providers: [],
   exports: [...components],
 })

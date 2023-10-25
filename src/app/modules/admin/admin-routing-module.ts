@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminModule } from './admin.module';
 import { AdminComponent } from './admin.component';
+import { AdminGuard } from 'src/app/core/guards/admin-guard.guard';
+import { CreateProductComponent } from './create-product/create-product.component';
 
 const routes: Routes = [
   {
@@ -13,6 +15,8 @@ const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
+    canActivate: [AdminGuard],
+    children: [{ path: 'criar-produto', component: CreateProductComponent }],
   },
 ];
 

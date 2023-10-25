@@ -1,9 +1,13 @@
-<div class="card" title="{{ product.title }}">
+<div class="card" title="{{ product.title || 'Nome' }} ">
   <div class="card__main">
     <div class="card__image-container">
       <img
         class="card__tokenImage"
-        [src]="product.image"
+        [src]="
+          !product.image
+            ? 'https://placehold.co/600x400?text=Produto'
+            : product.image
+        "
         [alt]="product.title"
       />
     </div>

@@ -1,0 +1,19 @@
+<!-- <p-toast></p-toast> -->
+<h3>{{ label }}</h3>
+<button mat-raised-button color="primary" (click)="onClick($event)">
+  <i class="material-icons">add</i>Upload
+</button>
+<input
+  #fileUpload
+  type="file"
+  multiple="multiple"
+  accept="image/*"
+  class="fileUpload--hidden"
+  (change)="onFileSelected($event)"
+/>
+<div *ngFor="let file of files">
+  <span>{{ file.name }}</span>
+  <button mat-icon-button color="primary" (click)="removeFile($event)">
+    <i class="material-icons">close</i>
+  </button>
+</div>
