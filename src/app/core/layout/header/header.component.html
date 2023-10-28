@@ -1,22 +1,51 @@
 <nav class="navbar__container">
-    <div class="navbar__items-container">
-        <img class="navbar__logo" src="../../../../assets/img/hog-art-logo.png">
-        <a routerLink="/home"  class="navbar__link">
-          Home
-          <span [routerLinkActive]="['navbar__isActive']"></span>
-        </a>
-        <a routerLink="/carrinho"  class="navbar__link">
-          Carrinho
-          <span [routerLinkActive]="['navbar__isActive']"></span>
-        </a>
-        <a href="#responsive-header"  class="navbar__link">
-          Crie sua conta
-          <span [routerLinkActive]="['navbar__isActive']"></span>
-        </a>
-      
-        
-      </div>
-      <div>
-        <a routerLink="/login" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Login</a>
-      </div>
-  </nav>
+  <div class="navbar__items-container">
+    <img class="navbar__logo" src="../../../../assets/img/hog-art-logo.png" />
+    <a
+      routerLink="/home"
+      class="navbar__link"
+      [routerLinkActive]="['navbar__isActive']"
+    >
+      Home
+    </a>
+    <a
+      *ngIf="!(user$ | async)"
+      href="#responsive-header"
+      [routerLinkActive]="['navbar__isActive']"
+      routerLink="/login"
+      [queryParams]="{ action: 'signup' }"
+      class="navbar__link"
+    >
+      Crie sua conta
+    </a>
+    <a
+      *ngIf="!(user$ | async)"
+      routerLink="/login"
+      [queryParams]="{ action: 'login' }"
+      [routerLinkActive]="['navbar__isActive']"
+      class="navbar__link"
+    >
+      Login
+    </a>
+  </div>
+  <div class="navbar__right-content">
+    <div *ngIf="user$ | async as user" class="navbar__username-content">
+      <span title="{{ user.challengeParam.userAttributes.email }}"
+        ><b>Bem Vindo</b>
+        {{ user.challengeParam.userAttributes.email.slice(0, 12) }}...</span
+      >
+      <button (click)="logout()" class="navbar__logoutBtn">Sair</button>
+    </div>
+    <button routerLink="/carrinho" class="navbar__btn">
+      <i class="material-icons">shopping_cart</i>
+      <span
+        class="badge"
+        *ngIf="
+          shoppingCartStoreItemsLength$ | async as shoppingCartStoreItemsLength
+        "
+      >
+        {{ shoppingCartStoreItemsLength }}</span
+      >
+    </button>
+  </div>
+</nav>

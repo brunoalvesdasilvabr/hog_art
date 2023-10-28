@@ -1,1 +1,61 @@
-<p>shopping-cart works!</p>
+<ng-container *ngIf="shoppingCartItems$ | async as products">
+  <p-table
+    *ngIf="products.length"
+    [value]="products"
+    [tableStyle]="{ 'min-width': '25rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <!-- <div class="flex align-items-center justify-content-between">
+        Produtos
+      </div> -->
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Nome</th>
+        <th>Imagem</th>
+        <th>Preço</th>
+        <th>Categoria</th>
+        <th>Quantidade</th>
+        <th>Deletar</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{ product.title }}</td>
+        <td>
+          <img
+            [src]="product.image"
+            [alt]="product.name"
+            width="100"
+            class="shadow-4"
+          />
+        </td>
+        <td>{{ product.calculatedPrice | currency : "BRL" : true }}</td>
+        <td>{{ product.category }}</td>
+        <td>
+          <div class="shopping-cart__table__quantity-row">
+            <i class="material-icons" (click)="addQuantity(product)">add</i>
+            <span>{{ product.quantity }}</span>
+            <i class="material-icons" (click)="removeQuantity(product)"
+              >remove</i
+            >
+          </div>
+        </td>
+        <td>
+          <p-button
+            (click)="removeProduct(product)"
+            label="X"
+            styleClass="p-button-danger"
+          ></p-button>
+        </td>
+        <!-- <td><p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating></td>
+                <td><p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"></p-tag></td> -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        Total: {{ total | currency : "BRL" : true }}
+      </div>
+    </ng-template>
+  </p-table>
+</ng-container>

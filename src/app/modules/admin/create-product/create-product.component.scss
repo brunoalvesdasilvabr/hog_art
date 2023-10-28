@@ -1,0 +1,14 @@
+.form {
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  min-width: 22rem;
+  margin-right: 2rem;
+}

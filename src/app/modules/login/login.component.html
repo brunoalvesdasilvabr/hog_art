@@ -1,1 +1,81 @@
-<p>login works!</p>
+<button class="back-btn" routerLink="/home">Voltar</button>
+
+<div class="login__container">
+  <div class="login__overlay-container"></div>
+  <div *ngIf="showCodeForm" class="login__form-container">
+    <form
+      class="login__form"
+      (ngSubmit)="SubmitCodeForm()"
+      [formGroup]="codeForm"
+    >
+      <mat-form-field>
+        <mat-label>Digite o Codigo recebido no email</mat-label>
+        <input formControlName="code" type="text" matInput />
+      </mat-form-field>
+      <ng-container *ngIf="errorMessage$ | async as errorMessage">
+        <app-error-message
+          *ngIf="errorMessage.error"
+          [errorMessage]="errorMessage.message"
+        ></app-error-message>
+      </ng-container>
+      <button
+        [disabled]="!codeForm.valid"
+        type="submit"
+        mat-raised-button
+        color="primary"
+      >
+        Enviar
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="!showCodeForm" class="login__form-container">
+    <h1>{{ userAction === "login" ? "Faça o login" : "Crie sua Conta" }}</h1>
+
+    <form class="login__form" (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input formControlName="email" type="email" matInput />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Senha</mat-label>
+        <input formControlName="password" type="password" matInput />
+      </mat-form-field>
+      <mat-form-field *ngIf="userAction === 'signup'">
+        <mat-label>Confirme a senha</mat-label>
+        <input formControlName="confirmPassword" type="password" matInput />
+      </mat-form-field>
+
+      <app-error-message
+        *ngIf="hasMatchError"
+        [errorMessage]="'Senhas devem ser iguais'"
+      ></app-error-message>
+      <span
+        class="text-danger"
+        *ngIf="
+                          (loginFormControl.password.touched ) &&
+                          loginFormControl.password.errors?.['required']|| loginFormControl.password.errors?.['invalidPassword']
+                        "
+      >
+        Digite uma senha Válida. A senha precisa conter. O mínimo de 8
+        caracteres. Ao menos 1 letra maiúscula. Ao menos 1 letra minuscula. Ao
+        menos 1 número.
+      </span>
+      <ng-container *ngIf="errorMessage$ | async as errorMessage">
+        <app-error-message
+          *ngIf="errorMessage.error"
+          [errorMessage]="errorMessage.message"
+        ></app-error-message>
+      </ng-container>
+      <button
+        [disabled]="!loginForm.valid"
+        type="submit"
+        mat-raised-button
+        color="primary"
+      >
+        {{ userAction === "login" ? "Entrar" : "Criar Conta" }}
+      </button>
+    </form>
+  </div>
+</div>
+<p-toast position="top-center"></p-toast>

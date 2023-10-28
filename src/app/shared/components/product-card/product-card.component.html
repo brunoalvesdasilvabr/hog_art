@@ -1,0 +1,37 @@
+<div class="card" title="{{ product.title }} ">
+  <div class="card__main">
+    <div class="card__image-container">
+      <img
+        class="card__tokenImage"
+        [src]="
+          !product.image.length || product.image === ['']
+            ? 'https://placehold.co/600x400?text=Produto'
+            : product.image
+        "
+        [alt]="product.title"
+      />
+    </div>
+    <h2>{{ product.title.slice(0, 20) }}</h2>
+    <p class="description">{{ product.description }}</p>
+    <div class="tokenInfo">
+      <div class="price">
+        <p>{{ product.price | currency : "BRL" : true }}</p>
+      </div>
+      <div class="duration">
+        <i
+          (click)="addToCart(product)"
+          title="adicionar ao carrinho"
+          class="material-icons"
+        >
+          add_shopping_cart
+        </i>
+      </div>
+    </div>
+  </div>
+  <a
+    class="card-btn"
+    (click)="setItemToStorage(product)"
+    routerLink="/home/detalhes/{{ product.title }}"
+    >Ver Detalhes</a
+  >
+</div>

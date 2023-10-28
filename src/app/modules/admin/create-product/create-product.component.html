@@ -1,0 +1,41 @@
+<h1>Crie seu produto</h1>
+<div class="form__container">
+  <form (ngSubmit)="SubmitProduct()" [formGroup]="createProductForm">
+    <mat-form-field>
+      <mat-label>Digite o Nome do produto</mat-label>
+      <input formControlName="title" type="text" matInput />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Descrição do Produto</mat-label>
+      <input formControlName="description" type="text" matInput />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Preço </mat-label>
+      <input formControlName="price" type="number" matInput />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Select</mat-label>
+      <mat-select formControlName="category">
+        <mat-option value="acessorios">Acessórios</mat-option>
+        <mat-option value="luminarias">Luminárias</mat-option>
+        <mat-option value="bolsas">Bolsas</mat-option>
+        <mat-option value="action_figure">Action Figure</mat-option>
+        <mat-option value="roupas">Roupas</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <app-file-upload
+      [label]="'Escolha as fotos do produto'"
+      formControlName="fileUpload"
+    ></app-file-upload>
+    <button
+      [disabled]="!createProductForm.valid"
+      type="submit"
+      mat-raised-button
+      color="primary"
+    >
+      Enviar
+    </button>
+  </form>
+
+  <app-product-card *ngIf="product" [product]="product"></app-product-card>
+</div>

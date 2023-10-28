@@ -1,5 +1,8 @@
 <app-header></app-header>
 <router-outlet></router-outlet>
-<app-footer></app-footer>
-
-
+<ng-container *ngIf="errorMessage$ | async as errorMessage">
+  <app-error-message
+    *ngIf="errorMessage.error"
+    [errorMessage]="errorMessage.message"
+  ></app-error-message>
+</ng-container>
