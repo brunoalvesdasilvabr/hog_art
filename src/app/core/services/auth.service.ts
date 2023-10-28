@@ -1,12 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import * as auth from 'firebase/auth';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-} from '@angular/fire/compat/firestore';
-import { BehaviorSubject } from 'rxjs';
 import { Amplify, Auth } from 'aws-amplify';
 import { environment } from 'src/environments/environment';
 import { FormGroup } from '@angular/forms';
@@ -14,7 +7,7 @@ import { UserStoreService } from '../store/user-store/user-store.service';
 import { AppConstants } from '../constants/appConstants.enum';
 import { UserInterface } from '../interfaces/user.interface';
 import { StorageKeys } from '../constants/storageKeys.enum';
-import { StorageService } from 'src/app/shared/services/storage.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Injectable({
   providedIn: 'root',

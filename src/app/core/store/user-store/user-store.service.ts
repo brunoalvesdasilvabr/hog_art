@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { UserInterface } from '../../interfaces/user.interface';
-import { StorageService } from 'src/app/shared/services/storage.service';
 import { StorageKeys } from '../../constants/storageKeys.enum';
 import { Auth } from 'aws-amplify';
 import { Router } from '@angular/router';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Injectable({
   providedIn: 'root',

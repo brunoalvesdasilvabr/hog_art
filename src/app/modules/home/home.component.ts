@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsService } from './services/products.service';
+import { ProductsService } from '../../shared/services/product/products.service';
 import { Observable, map, tap } from 'rxjs';
 import {
   ProductInterface,

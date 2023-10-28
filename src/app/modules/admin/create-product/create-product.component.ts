@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
-import { FileUpload } from 'primeng/fileupload';
-import { FileUploadInterface } from 'src/app/shared/interfaces/file-upload.interface';
 import { ProductInterface } from 'src/app/shared/interfaces/product.interface';
+import { ProductsService } from '../../../shared/services/product/products.service';
 // import { UploadEvent } from 'primeng/fileupload';
 
 @Component({
@@ -20,7 +18,7 @@ export class CreateProductComponent implements OnInit {
     fileUpload: new FormControl<Event>({} as Event, Validators.required),
     category: new FormControl('', Validators.required),
   });
-  constructor(private messageService: MessageService) {}
+  constructor(private productService: ProductsService) {}
   ngOnInit(): void {
     this.createProductForm.valueChanges.subscribe((res) => {
       console.log(!!res.fileUpload!.target);
@@ -55,6 +53,22 @@ export class CreateProductComponent implements OnInit {
     }
   }
   SubmitProduct() {
-    console.log(this.createProductForm.value);
+    if (this.createProductForm.valid) {
+      const product = {
+        title: this.createProductForm.value.title!,
+        price: this.createProductForm.value.price!,
+        image: this.fileImageToBase64String(
+          this.createProductForm.value.fileUpload!
+        ),
+        category: this.createProductForm.value.category!,
+        description: this.createProductForm.value.description!,
+        id: Math.random().toString(),
+      };
+      this.productService.createProduct(product).subscribe((res) => {
+        console.log({ res });
+      });
+    }
+
+    // console.log(this.createProductForm.value);
   }
 }

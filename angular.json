@@ -18,7 +18,13 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["lodash", "aws-amplify"],
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "aws-amplify",
+              "rxjs-compat",
+              "rxjs",
+              "aws-sdk"
+            ],
             "outputPath": "dist/hog_art",
             "index": "src/index.html",
             "main": "src/main.ts",

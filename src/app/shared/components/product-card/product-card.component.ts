@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ProductInterface } from '../../interfaces/product.interface';
-import { StorageService } from '../../services/storage.service';
 import { StorageKeys } from 'src/app/core/constants/storageKeys.enum';
+import { StorageService } from '../../services/storage/storage.service';
 
 @Component({
   selector: 'app-product-card',

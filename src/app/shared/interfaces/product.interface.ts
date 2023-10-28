@@ -1,7 +1,7 @@
 export interface ProductInterface {
   category: string;
   description: string;
-  id?: number;
+  id?: string;
   image: string[];
   price: number;
   quantity?: number;

@@ -16,6 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
+import { ProductsService } from 'src/app/shared/services/product/products.service';
 
 @NgModule({
   declarations: [AdminComponent, CreateProductComponent],
@@ -34,6 +35,6 @@ import { ButtonModule } from 'primeng/button';
     FileUploadModule,
     MatSelectModule,
   ],
-  providers: [MessageService],
+  providers: [MessageService, ProductsService],
 })
 export class AdminModule {}

@@ -11,9 +11,11 @@
   class="fileUpload--hidden"
   (change)="onFileSelected($event)"
 />
-<div *ngFor="let file of files">
-  <span>{{ file.name }}</span>
-  <button mat-icon-button color="primary" (click)="removeFile($event)">
-    <i class="material-icons">close</i>
-  </button>
-</div>
+<ng-container *ngIf="files.length">
+  <div *ngFor="let file of files">
+    <span>{{ file.name }}</span>
+    <button mat-icon-button color="primary" (click)="removeFile($event)">
+      <i class="material-icons">close</i>
+    </button>
+  </div>
+</ng-container>
