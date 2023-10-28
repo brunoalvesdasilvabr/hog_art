@@ -1,5 +1,6 @@
 export const environment = {
-  production: false,
+  production: true,
+  backendApi: '',
   cognito: {
     userPoolId: 'sa-east-1_V9mVYHPfP',
     userPoolWebClientId: '46455vkgc9qvge381fgblcvtkn',

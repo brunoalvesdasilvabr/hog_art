@@ -19,11 +19,17 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "lodash",
-              "aws-amplify",
-              "rxjs-compat",
-              "rxjs",
-              "aws-sdk"
+              "js-cookie",
+              "isomorphic-unfetch",
+              "buffer",
+              "ulid",
+              "url",
+              "camelcase-keys",
+              "@aws-crypto/crc32",
+              "@aws-crypto/sha256-browser",
+              "uuid",
+              "cookie",
+              "lodash"
             ],
             "outputPath": "dist/hog_art",
             "index": "src/index.html",
