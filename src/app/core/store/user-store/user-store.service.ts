@@ -21,11 +21,17 @@ export class UserStoreService {
 
   get getUser(): UserInterface | null {
     const userFromStorage = this.storage.get(StorageKeys.user);
-    if (userFromStorage) {
+    const isTokenValid = this.validateToken(userFromStorage);
+    if (userFromStorage && isTokenValid) {
       this.setUser = userFromStorage;
       return userFromStorage;
     } else {
       return null;
     }
+  }
+
+  private validateToken(user: UserInterface) {
+    //validate token later
+    return true;
   }
 }

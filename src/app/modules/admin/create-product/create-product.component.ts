@@ -68,7 +68,5 @@ export class CreateProductComponent implements OnInit {
         console.log({ res });
       });
     }
-
-    // console.log(this.createProductForm.value);
   }
 }

@@ -10,10 +10,7 @@ export const AdminGuard: CanActivateFn = (route, state) => {
   const user = userStore.getUser;
 
   if (user) {
-    if (
-      user!.challengeParam.userAttributes['custom:role'] !==
-      AppConstants.adminRole
-    ) {
+    if (user!.attributes['custom:role'] !== AppConstants.adminRole) {
       router.navigate(['/home']);
       return false;
     } else {

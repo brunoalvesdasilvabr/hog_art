@@ -30,9 +30,8 @@
   </div>
   <div class="navbar__right-content">
     <div *ngIf="user$ | async as user" class="navbar__username-content">
-      <span title="{{ user.challengeParam.userAttributes.email }}"
-        ><b>Bem Vindo</b>
-        {{ user.challengeParam.userAttributes.email.slice(0, 12) }}...</span
+      <span title="{{ user.attributes.email }}"
+        ><b>Bem Vindo</b> {{ user.attributes.email.slice(0, 12) }}...</span
       >
       <button (click)="logout()" class="navbar__logoutBtn">Sair</button>
     </div>

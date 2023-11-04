@@ -67,12 +67,14 @@ export class LoginComponent implements OnDestroy, OnInit {
   public SubmitCodeForm() {
     this.authService
       .confirmSignUp(this.loginForm, this.codeForm)
-      .then(() => {
+      .then((res) => {
+        console.log({ res });
         this.toast.add({
           severity: 'success',
           summary: 'Sucesso',
           detail: 'Sua conta foi Criada com sucesso',
         });
+
         this.resetForm(this.loginForm);
         this.showLoginForm();
       })

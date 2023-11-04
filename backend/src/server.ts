@@ -50,6 +50,28 @@ app.use(
     extended: true,
   })
 );
+app.put('/api/save-user', (req, res) => {
+  console.log(req.body.user);
+  const params = {
+    TableName: 'usersInfo',
+    Item: {
+      userId: req.body.user.attributes.sub,
+      email: req.body.user.email,
+      likedProducts: [],
+      purchased: [],
+    },
+  };
+
+  dynamodb.put(params, (err, data) => {
+    if (err) {
+      console.error('Error:', err);
+    } else {
+      res.send(data);
+      console.log('Item added:', data);
+    }
+  });
+});
+
 app.post('/api/products', (req, res) => {
   console.log(req.body);
   const params = {

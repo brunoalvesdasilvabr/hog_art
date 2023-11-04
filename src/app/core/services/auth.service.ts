@@ -8,6 +8,8 @@ import { AppConstants } from '../constants/appConstants.enum';
 import { UserInterface } from '../interfaces/user.interface';
 import { StorageKeys } from '../constants/storageKeys.enum';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import { HttpClient } from '@angular/common/http';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,17 +18,20 @@ export class AuthService {
   constructor(
     public router: Router,
     public userStore: UserStoreService,
-    private storage: StorageService
+    private storage: StorageService,
+    private http: HttpClient
   ) {
     Amplify.configure({
       Auth: environment.cognito,
     });
   }
-  public signIn(form: FormGroup): Promise<any> {
+  public signIn(form: FormGroup, confirmSignup?: boolean): Promise<any> {
     return Auth.signIn(form.value.email, form.value.password)
       .then((user) => {
-        console.log({ user });
         this.userStore.setUser = user;
+        if (confirmSignup) {
+          this.saveUseronDynamoDb(user);
+        }
         this.navigateUser(user);
       })
       .catch((err) => {
@@ -40,12 +45,26 @@ export class AuthService {
     });
   }
 
-  public confirmSignUp(
+  public async confirmSignUp(
     loginForm: FormGroup,
     codeForm: FormGroup
   ): Promise<any> {
-    console.log({ loginForm }, { codeForm });
-    return Auth.confirmSignUp(loginForm.value.email, codeForm.value.code);
+    try {
+      const confirmedSignup = await Auth.confirmSignUp(
+        loginForm.value.email,
+        codeForm.value.code
+      );
+      console.log({ confirmedSignup });
+      this.signIn(loginForm, true);
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  public saveUseronDynamoDb(user: UserInterface) {
+    this.http
+      .put(`${environment.backendApi}/api/save-user`, { user: user })
+      .subscribe();
   }
   public signOut(): Promise<any> {
     return Auth.signOut().then(() => {
@@ -56,54 +75,10 @@ export class AuthService {
   }
 
   private navigateUser(user: UserInterface) {
-    if (
-      user!.challengeParam.userAttributes['custom:role'] ===
-      AppConstants.adminRole
-    ) {
+    if (user!.attributes['custom:role'] === AppConstants.adminRole) {
       this.router.navigate(['/admin']);
     } else {
       this.router.navigate(['/home']);
     }
   }
-
-  // SignIn(email: string, password: string) {
-  //   this.afAuth.user;
-  //   return this.afAuth
-  //     .signInWithEmailAndPassword(email, password)
-  //     .then((result) => {
-  //       console.log({ result });
-  //       console.log(this.afAuth.currentUser);
-  //       // this.SetUserData(result.user);
-  //       // this.afAuth.authState.subscribe((user) => {
-  //       //   console.log({ user });
-  //       //   // if (user) {
-  //       //   //   this.router.navigate(['dashboard']);
-  //       //   // }
-  //       // });
-  //     })
-  //     .catch((error) => {
-  //       window.alert(error.message);
-  //     });
-  // }
 }
-
-// constructor(private auth:AuthService,private firestore:AngularFirestore,public afAuth: AngularFireAuth,
-//   ){
-// // this.firestore.collection('users').doc() .snapshotChanges().subscribe((db)=>{
-
-// //   console.log({db})
-// // })
-// //  this.afAuth.user.subscribe((useer)=>{
-// // console.log({useer})
-// //  const userRef = this.firestore.collection('users').doc(useer!.uid)
-// //  // updates an array
-// //  this.firestore.collection('users').doc(useer!.uid).update({
-// //   "purchased": arrayUnion({item:'camiseta 8',price:13550})
-
-// //  })
-// // //add but ovewrites it
-// // //  userRef.set({
-// // //   purchased:[{item:'camiseta 7',price:135.50}]
-// // //  },{merge:false})
-
-// //  })
