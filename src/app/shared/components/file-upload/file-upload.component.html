@@ -1,6 +1,6 @@
 <!-- <p-toast></p-toast> -->
 <h3>{{ label }}</h3>
-<button mat-raised-button color="primary" (click)="onClick($event)">
+<button mat-raised-button color="primary" (click)="onClick()">
   <i class="material-icons">add</i>Upload
 </button>
 <input
@@ -11,11 +11,12 @@
   class="fileUpload--hidden"
   (change)="onFileSelected($event)"
 />
-<ng-container *ngIf="files.length">
-  <div *ngFor="let file of files">
+<ng-container *ngIf="files && files.length">
+  <div class="fileUpload__items" *ngFor="let file of files; let i = index">
     <span>{{ file.name }}</span>
-    <button mat-icon-button color="primary" (click)="removeFile($event)">
+    <button mat-icon-button color="primary" (click)="removeFile(file)">
       <i class="material-icons">close</i>
     </button>
+    <p *ngIf="i === 0"><b>(Essa é a capa do produto)</b></p>
   </div>
 </ng-container>

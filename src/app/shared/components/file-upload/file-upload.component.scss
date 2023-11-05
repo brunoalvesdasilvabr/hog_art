@@ -2,4 +2,14 @@
   &--hidden {
     display: none;
   }
+  &__items {
+    display: flex;
+    align-items: center;
+    p {
+      margin: 0;
+    }
+    i {
+      font-size: 0.8rem;
+    }
+  }
 }

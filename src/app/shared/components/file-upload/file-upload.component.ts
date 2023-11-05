@@ -27,39 +27,32 @@ export class FileUploadComponent implements ControlValueAccessor {
   @ViewChild('fileUpload')
   fileUpload!: ElementRef;
   files: FileUploadInterface[] = [];
-
+  onTouched!: () => void;
+  onChange!: (event: Event) => void;
   writeValue(obj: any): void {
+    console.log({ obj });
     this.files = obj;
-    // throw new Error('Method not implemented.');
   }
   registerOnChange(fn: any): void {
-    console.log(this.files);
-    console.log({ fn });
-    this.onFileSelected = fn;
-    // throw new Error('Method not implemented.');
+    this.onChange = fn;
   }
   registerOnTouched(fn: any): void {
-    // throw new Error('Method not implemented.');
+    this.onTouched = fn;
   }
-  setDisabledState?(isDisabled: boolean): void {
-    // throw new Error('Method not implemented.');
-  }
-  onClick(event: Event) {
+  setDisabledState?(isDisabled: boolean): void {}
+  onClick() {
     if (this.fileUpload) this.fileUpload.nativeElement.click();
   }
 
   onFileSelected(event: any) {
-    // console.log({ event });
-    // if (event.target.files.length > 0) {
-    //   console.log('aqui', event.target.files);
-    //   this.files = event.target.files;
-    //   var reader = new FileReader();
-    //   reader.onload = (e) => {
-    //     console.log({ e });
-    //     this.imgSrc = reader.result as string;
-    //   };
-    //   reader.readAsDataURL(event.target.files[0]);
-    // }
+    this.files = event.target!.files;
+    this.onChange(event);
+    this.onTouched();
   }
-  removeFile(event: Event) {}
+
+  removeFile(file: FileUploadInterface) {
+    console.log(this.files);
+    console.log(Object.keys(this.files).filter((el) => console.log({ el })));
+    console.log({ file });
+  }
 }

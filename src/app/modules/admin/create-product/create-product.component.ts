@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductInterface } from 'src/app/shared/interfaces/product.interface';
 import { ProductsService } from '../../../shared/services/product/products.service';
+import { MessageService } from 'primeng/api';
 // import { UploadEvent } from 'primeng/fileupload';
 
 @Component({
@@ -15,13 +16,15 @@ export class CreateProductComponent implements OnInit {
     title: new FormControl('', Validators.required),
     price: new FormControl(0, Validators.required),
     description: new FormControl('', Validators.required),
-    fileUpload: new FormControl<Event>({} as Event, Validators.required),
+    fileUpload: new FormControl<Event | null>(null, Validators.required),
     category: new FormControl('', Validators.required),
   });
-  constructor(private productService: ProductsService) {}
+  constructor(
+    private productService: ProductsService,
+    private toast: MessageService
+  ) {}
   ngOnInit(): void {
     this.createProductForm.valueChanges.subscribe((res) => {
-      console.log(!!res.fileUpload!.target);
       console.log({ res });
       this.product = {
         title: res.title!,
@@ -33,8 +36,8 @@ export class CreateProductComponent implements OnInit {
     });
   }
 
-  private fileImageToBase64String(filesEvent: Event): string[] {
-    if (!!filesEvent.target) {
+  private fileImageToBase64String(filesEvent: Event | null): string[] {
+    if (!!filesEvent) {
       const UploadedImages: string[] = [];
       const eventTarget = filesEvent.currentTarget as HTMLInputElement;
       Object.keys(eventTarget.files!).forEach((key) => {
@@ -62,10 +65,15 @@ export class CreateProductComponent implements OnInit {
         ),
         category: this.createProductForm.value.category!,
         description: this.createProductForm.value.description!,
-        id: Math.random().toString(),
+        id: Date.now().toString(),
       };
       this.productService.createProduct(product).subscribe((res) => {
         console.log({ res });
+        this.toast.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: 'Sua conta foi Criada com sucesso',
+        });
       });
     }
   }

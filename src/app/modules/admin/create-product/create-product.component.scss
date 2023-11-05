@@ -9,6 +9,9 @@ form {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  min-width: 22rem;
+  min-width: 30%;
   margin-right: 2rem;
+}
+app-file-upload {
+  margin-bottom: 1rem;
 }
