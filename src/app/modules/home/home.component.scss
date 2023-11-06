@@ -14,13 +14,15 @@
     &--create {
       position: absolute;
       right: 1rem;
-      top: 1rem;
+      top: 0.5rem;
     }
   }
 
   &__category-title {
     padding-top: 2rem;
+    padding-left: 3rem;
     font-size: 2rem;
+    margin: 0;
     font-family: "Montserrat";
     color: #694966;
   }

@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class ProductCardComponent {
   @Input() product!: ProductInterface;
+  @Input() edit!: boolean;
   @Output() productToAdded = new EventEmitter<ProductInterface>();
   user$!: Observable<UserInterface | null>;
   constructor(

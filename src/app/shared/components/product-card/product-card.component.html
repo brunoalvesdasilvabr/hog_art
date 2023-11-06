@@ -1,6 +1,9 @@
 <div class="card" title="{{ product.title }} ">
   <ng-container *ngIf="user$ | async as user">
-    <div class="card__btn-container" *ngIf="canShowAdminProperty(user)">
+    <div
+      class="card__btn-container"
+      *ngIf="canShowAdminProperty(user) && !edit"
+    >
       <button mat-flat-button color="accent" (click)="navigateUser(product)">
         Editar
       </button>
