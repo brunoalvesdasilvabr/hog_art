@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { StorageKeys } from 'src/app/core/constants/storageKeys.enum';
 import { ProductInterface } from 'src/app/shared/interfaces/product.interface';
 import { CarouselModule } from 'primeng/carousel';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-home-details',
@@ -14,7 +12,8 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 })
 export class HomeDetailsComponent {
   product!: ProductInterface;
-  constructor(private storage: StorageService) {
-    this.product = this.storage.get(StorageKeys.productDetails);
+  constructor(private location: Location) {
+    console.log(this.location.getState());
+    this.product = this.location.getState() as ProductInterface;
   }
 }

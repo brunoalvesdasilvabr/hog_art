@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
 import { UserStoreService } from 'src/app/core/store/user-store/user-store.service';
 import { UserInterface } from 'src/app/core/interfaces/user.interface';
 import { AppConstants } from 'src/app/core/constants/appConstants.enum';
+import { UtilsService } from 'src/app/shared/utils/utils';
 
 @Component({
   selector: 'app-home',
@@ -43,6 +44,7 @@ export class HomeComponent implements OnInit {
     },
   ];
   constructor(
+    public utilsService: UtilsService,
     private productsService: ProductsService,
     private shoppingCartSTore: ShoppingCartStoreService,
     private toast: MessageService,
@@ -69,9 +71,7 @@ export class HomeComponent implements OnInit {
       detail: 'Adicionado ao carrinho',
     });
   }
-  public canShowAdminProperty(user: UserInterface) {
-    return user.attributes['custom:role'] === AppConstants.adminRole;
-  }
+
   private handleProductsByCategory(
     res: ProductInterface[]
   ): ProductsByCategoryInterface[] {

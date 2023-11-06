@@ -28,6 +28,8 @@
       overflow-y: scroll;
       overscroll-behavior-y: scrool;
       color: #a89ec9;
+      resize: none;
+      background: transparent;
     }
     .tokenInfo {
       display: flex;

@@ -1,7 +1,7 @@
 <div class="home__container">
   <ng-container *ngIf="user$ | async as user">
     <button
-      *ngIf="canShowAdminProperty(user)"
+      *ngIf="utilsService.canShowAdminProperty(user)"
       class="home__btn--create"
       [routerLink]="['/admin/criar-produto']"
       mat-raised-button

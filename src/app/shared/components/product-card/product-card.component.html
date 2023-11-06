@@ -2,9 +2,13 @@
   <ng-container *ngIf="user$ | async as user">
     <div
       class="card__btn-container"
-      *ngIf="canShowAdminProperty(user) && !edit"
+      *ngIf="utilsService.canShowAdminProperty(user) && !edit"
     >
-      <button mat-flat-button color="accent" (click)="navigateUser(product)">
+      <button
+        mat-flat-button
+        color="accent"
+        (click)="navigateUser('edit', product)"
+      >
         Editar
       </button>
       <button mat-flat-button color="warn">Deletar</button>
@@ -24,13 +28,13 @@
       />
     </div>
     <h2>{{ product.title.slice(0, 20) }}</h2>
-    <p class="description">{{ product.description }}</p>
+    <textarea class="description">{{ product.description }}</textarea>
     <div class="tokenInfo">
       <div class="price">
         <p>{{ product.price | currency : "BRL" : true }}</p>
       </div>
       <ng-container *ngIf="user$ | async as user">
-        <div *ngIf="!canShowAdminProperty(user)" class="duration">
+        <div *ngIf="!utilsService.canShowAdminProperty(user)" class="duration">
           <i
             (click)="addToCart(product)"
             title="adicionar ao carrinho"
@@ -42,10 +46,7 @@
       </ng-container>
     </div>
   </div>
-  <a
-    class="card-btn"
-    (click)="setItemToStorage(product)"
-    routerLink="/home/detalhes/{{ product.title }}"
+  <a class="card-btn" (click)="navigateUser('details', product)"
     >Ver Detalhes</a
   >
 </div>

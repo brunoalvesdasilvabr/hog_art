@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductInterface } from 'src/app/shared/interfaces/product.interface';
 import { ProductsService } from '../../../shared/services/product/products.service';
 import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 // import { UploadEvent } from 'primeng/fileupload';
 import { Location } from '@angular/common';
 
@@ -15,18 +15,35 @@ import { Location } from '@angular/common';
 export class CreateProductComponent implements OnInit {
   product!: ProductInterface;
   createProductForm = new FormGroup({
-    title: new FormControl('', Validators.required),
-    price: new FormControl(0, Validators.required),
-    description: new FormControl('', Validators.required),
-    fileUpload: new FormControl<Event | null>(null, Validators.required),
-    category: new FormControl('', Validators.required),
+    title: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    price: new FormControl(0, {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    description: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    fileUpload: new FormControl<Event | null>(null, {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    category: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
   });
   constructor(
     private productService: ProductsService,
     private toast: MessageService,
     private router: Router,
+    private route: ActivatedRoute,
     private location: Location
   ) {
+    this.getAction();
     console.log(this.location.getState());
     console.log(this.router.getCurrentNavigation());
   }
@@ -41,6 +58,28 @@ export class CreateProductComponent implements OnInit {
         description: res.description!,
       };
     });
+  }
+
+  private getAction() {
+    const action = this.route.snapshot.queryParams['action'];
+    switch (action) {
+      case 'edit':
+        this.fillInputFields();
+        break;
+
+      default:
+        break;
+    }
+  }
+  private fillInputFields() {
+    const product = this.location.getState() as ProductInterface;
+    Object.keys(this.createProductForm.controls).forEach((control) => {
+      this.createProductForm.controls[
+        control as keyof typeof this.createProductForm.controls
+      ].setValue(product[control as keyof typeof product] as never);
+    });
+
+    this.product = product;
   }
 
   private fileImageToBase64String(filesEvent: Event | null): string[] {

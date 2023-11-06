@@ -7,6 +7,7 @@ import { UserInterface } from 'src/app/core/interfaces/user.interface';
 import { Observable } from 'rxjs';
 import { AppConstants } from 'src/app/core/constants/appConstants.enum';
 import { Router } from '@angular/router';
+import { UtilsService } from '../../utils/utils';
 
 @Component({
   selector: 'app-product-card',
@@ -19,6 +20,7 @@ export class ProductCardComponent {
   @Output() productToAdded = new EventEmitter<ProductInterface>();
   user$!: Observable<UserInterface | null>;
   constructor(
+    public utilsService: UtilsService,
     private storage: StorageService,
     private userStore: UserStoreService,
     private route: Router
@@ -29,17 +31,25 @@ export class ProductCardComponent {
     this.productToAdded.emit(product);
   }
 
-  navigateUser(product: ProductInterface) {
-    this.route.navigate(['admin/criar-produto'], {
-      state: product,
-    });
+  navigateUser(route: 'details' | 'edit', product: ProductInterface) {
+    switch (route) {
+      case 'details':
+        this.route.navigate([`/home/detalhes/${product.title}`], {
+          state: product,
+        });
+        break;
+      case 'edit':
+        this.route.navigate(['admin/criar-produto'], {
+          queryParams: { action: 'edit' },
+          state: product,
+        });
+        break;
+
+      default:
+        break;
+    }
   }
-  setItemToStorage(product: ProductInterface) {
-    this.storage.set(StorageKeys.productDetails, product);
-  }
-  public canShowAdminProperty(user: UserInterface) {
-    return user.attributes['custom:role'] === AppConstants.adminRole;
-  }
+
   private getUser(): void {
     this.user$ = this.userStore.user$;
   }
