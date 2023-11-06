@@ -12,7 +12,9 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 export class UserStoreService {
   private _user = new BehaviorSubject<UserInterface | null>(null);
   user$ = this._user.asObservable();
-  constructor(private storage: StorageService, private router: Router) {}
+  constructor(private storage: StorageService, private router: Router) {
+    this.getUser;
+  }
 
   set setUser(user: UserInterface | null) {
     this.storage.set(StorageKeys.user, user);

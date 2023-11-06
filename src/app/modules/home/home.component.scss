@@ -1,6 +1,7 @@
 .home {
   &__container {
     background-color: #ededed;
+    position: relative;
     // width: 100%;
     // display: grid;
     // padding:01rem;
@@ -8,6 +9,13 @@
     // grid-template-columns: repeat(auto-fit,minmax(15rem, 1fr));
     // height: auto;
     // cursor: pointer;
+  }
+  &__btn {
+    &--create {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+    }
   }
 
   &__category-title {

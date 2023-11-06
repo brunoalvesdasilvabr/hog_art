@@ -1,4 +1,16 @@
 <div class="home__container">
+  <ng-container *ngIf="user$ | async as user">
+    <button
+      *ngIf="canShowAdminProperty(user)"
+      class="home__btn--create"
+      [routerLink]="['/admin/criar-produto']"
+      mat-raised-button
+      color="primary"
+    >
+      Criar um Produto
+    </button></ng-container
+  >
+
   <ng-container *ngFor="let productCategories of products$ | async; index as i">
     <h1 class="home__category-title">{{ productCategories.category }}</h1>
     <p-carousel

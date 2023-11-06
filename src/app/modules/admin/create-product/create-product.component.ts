@@ -3,7 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductInterface } from 'src/app/shared/interfaces/product.interface';
 import { ProductsService } from '../../../shared/services/product/products.service';
 import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 // import { UploadEvent } from 'primeng/fileupload';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-product',
@@ -21,8 +23,13 @@ export class CreateProductComponent implements OnInit {
   });
   constructor(
     private productService: ProductsService,
-    private toast: MessageService
-  ) {}
+    private toast: MessageService,
+    private router: Router,
+    private location: Location
+  ) {
+    console.log(this.location.getState());
+    console.log(this.router.getCurrentNavigation());
+  }
   ngOnInit(): void {
     this.createProductForm.valueChanges.subscribe((res) => {
       console.log({ res });

@@ -1,4 +1,13 @@
 <div class="card" title="{{ product.title }} ">
+  <ng-container *ngIf="user$ | async as user">
+    <div class="card__btn-container" *ngIf="canShowAdminProperty(user)">
+      <button mat-flat-button color="accent" (click)="navigateUser(product)">
+        Editar
+      </button>
+      <button mat-flat-button color="warn">Deletar</button>
+    </div>
+  </ng-container>
+
   <div class="card__main">
     <div class="card__image-container">
       <img
@@ -17,15 +26,17 @@
       <div class="price">
         <p>{{ product.price | currency : "BRL" : true }}</p>
       </div>
-      <div class="duration">
-        <i
-          (click)="addToCart(product)"
-          title="adicionar ao carrinho"
-          class="material-icons"
-        >
-          add_shopping_cart
-        </i>
-      </div>
+      <ng-container *ngIf="user$ | async as user">
+        <div *ngIf="!canShowAdminProperty(user)" class="duration">
+          <i
+            (click)="addToCart(product)"
+            title="adicionar ao carrinho"
+            class="material-icons"
+          >
+            add_shopping_cart
+          </i>
+        </div>
+      </ng-container>
     </div>
   </div>
   <a

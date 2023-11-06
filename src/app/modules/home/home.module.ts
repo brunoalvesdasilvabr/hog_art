@@ -8,6 +8,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { CarouselModule } from 'primeng/carousel';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -16,6 +17,7 @@ import { CarouselModule } from 'primeng/carousel';
     HomeRoutingModule,
     SharedModule,
     HttpClientModule,
+    MatButtonModule,
     ToastModule,
     CarouselModule,
   ],

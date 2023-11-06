@@ -8,6 +8,8 @@ import {
 import { ShoppingCartStoreService } from 'src/app/shared/stores/ShoppingCartStoreService';
 import { MessageService } from 'primeng/api';
 import { UserStoreService } from 'src/app/core/store/user-store/user-store.service';
+import { UserInterface } from 'src/app/core/interfaces/user.interface';
+import { AppConstants } from 'src/app/core/constants/appConstants.enum';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +18,7 @@ import { UserStoreService } from 'src/app/core/store/user-store/user-store.servi
 })
 export class HomeComponent implements OnInit {
   products$!: Observable<ProductsByCategoryInterface[]>;
-
+  user$!: Observable<UserInterface | null>;
   carouselAutoPLay: number = 10000;
   responsiveOptions = [
     {
@@ -46,21 +48,33 @@ export class HomeComponent implements OnInit {
     private toast: MessageService,
     private userStore: UserStoreService
   ) {
-    this.userStore.getUser;
+    this.getUser();
   }
 
   ngOnInit(): void {
     this.products$ = this.productsService.getAllProducts().pipe(
       map((res) => {
         const productsByCategory = this.handleProductsByCategory(res);
-        console.log({ productsByCategory });
         return productsByCategory;
       }),
       tap((res) => console.log(res))
     );
   }
 
-  handleProductsByCategory(res: ProductInterface[]) {
+  public addToCart(product: ProductInterface): void {
+    this.shoppingCartSTore.addItem(product);
+    this.toast.add({
+      severity: 'success',
+      summary: 'Sucesso',
+      detail: 'Adicionado ao carrinho',
+    });
+  }
+  public canShowAdminProperty(user: UserInterface) {
+    return user.attributes['custom:role'] === AppConstants.adminRole;
+  }
+  private handleProductsByCategory(
+    res: ProductInterface[]
+  ): ProductsByCategoryInterface[] {
     const newObj: ProductsByCategoryInterface[] = [];
     const arrayOfCategories = Array.from(new Set(res.map((el) => el.category)));
     res.forEach((el, i) => {
@@ -77,13 +91,7 @@ export class HomeComponent implements OnInit {
     });
     return newObj;
   }
-
-  addToCart(product: ProductInterface) {
-    this.shoppingCartSTore.addItem(product);
-    this.toast.add({
-      severity: 'success',
-      summary: 'Sucesso',
-      detail: 'Adicionado ao carrinho',
-    });
+  private getUser(): void {
+    this.user$ = this.userStore.user$;
   }
 }
