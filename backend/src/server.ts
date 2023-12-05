@@ -10,37 +10,9 @@ AWS.config.update({
 });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
-// const params = {
-//   TableName: 'products',
-//   Item: {
-//     description: 'camiseta de algodao pronta pra você',
-//     category: 'roupas',
-//     id: '1',
-//     image: '',
-//     price: 23.6,
-//     quantity: 1,
-//     title: 'Camiseta',
-//   },
-// };
 
-// dynamodb.put(params, (err, data) => {
-//   if (err) {
-//     console.error('Error:', err);
-//   } else {
-//     console.log('Item added:', data);
-//   }
-// });
-
-// Get all items
-// dynamodb.scan(params, (err, data) => {
-//   if (err) {
-//     console.error('Error:', err);
-//   } else {
-//     console.log('Item added:', data);
-//   }
-// });
 const app = express();
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '35mb' }));
 app.use(
   cors({
     credentials: true,
@@ -48,8 +20,11 @@ app.use(
   }),
   bodyParser.urlencoded({
     extended: true,
+    limit: '35mb',
+    parameterLimit: 50000,
   })
 );
+
 app.put('/api/save-user', (req, res) => {
   console.log(req.body.user);
   const params = {
@@ -85,6 +60,22 @@ app.post('/api/products', (req, res) => {
     } else {
       res.send(data);
       console.log('Item added:', data);
+    }
+  });
+});
+app.put('/api/products', (req, res) => {
+  console.log(req.body);
+  const params = {
+    TableName: 'products',
+    Item: req.body.newProduct,
+  };
+
+  dynamodb.put(params, (err, data) => {
+    if (err) {
+      console.error('Error:', err);
+    } else {
+      res.send(data);
+      console.log('Item edited:', data);
     }
   });
 });

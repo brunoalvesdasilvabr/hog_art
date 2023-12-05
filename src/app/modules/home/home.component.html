@@ -4,6 +4,7 @@
       *ngIf="utilsService.canShowAdminProperty(user)"
       class="home__btn--create"
       [routerLink]="['/admin/criar-produto']"
+      [queryParams]="{ action: 'create' }"
       mat-raised-button
       color="primary"
     >

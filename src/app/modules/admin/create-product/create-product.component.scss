@@ -1,17 +1,36 @@
 .form {
   &__container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 1rem;
+    form {
+      display: grid;
+      grid-template-areas:
+        "productName productDesc"
+        "productPrice productCat"
+        "productImg Btn";
+      grid-gap: 1rem;
+      mat-form-field:nth-child(1) {
+        grid-area: productName;
+      }
+      mat-form-field:nth-child(2) {
+        grid-area: productDesc;
+      }
+      mat-form-field:nth-child(3) {
+        grid-area: productPrice;
+      }
+      mat-form-field:nth-child(4) {
+        grid-area: productCat;
+      }
+      app-file-upload {
+        grid-area: productImg;
+      }
+      button[type="submit"] {
+        margin-top: 3rem;
+        grid-area: Btn;
+      }
+    }
   }
 }
-form {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  min-width: 30%;
-  margin-right: 2rem;
-}
+
 app-file-upload {
   margin-bottom: 1rem;
 }

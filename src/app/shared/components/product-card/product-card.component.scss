@@ -118,8 +118,7 @@
   &__tokenImage {
     border-radius: 0.5rem;
     max-width: 100%;
-    width: 100%;
-    height: 8rem;
+    aspect-ratio: 1/1;
     object-fit: cover;
   }
   ::before {

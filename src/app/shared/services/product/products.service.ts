@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ProductInterface } from 'src/app/shared/interfaces/product.interface';
+import {
+  ProductInterface,
+  SavedProductInterface,
+} from 'src/app/shared/interfaces/product.interface';
 import { environment } from './../../../../environments/environment';
 
 @Injectable({
@@ -17,8 +20,13 @@ export class ProductsService {
     );
   }
 
-  createProduct(product: ProductInterface): Observable<any> {
+  createProduct(product: SavedProductInterface): Observable<any> {
     return this.http.post(`${environment.backendApi}/api/products`, {
+      newProduct: product,
+    });
+  }
+  editProduct(product: SavedProductInterface): Observable<any> {
+    return this.http.put(`${environment.backendApi}/api/products`, {
       newProduct: product,
     });
   }

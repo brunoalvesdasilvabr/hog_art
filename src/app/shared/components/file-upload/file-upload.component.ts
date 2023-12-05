@@ -26,9 +26,10 @@ export class FileUploadComponent implements ControlValueAccessor {
   imgSrc!: string;
   @ViewChild('fileUpload')
   fileUpload!: ElementRef;
-  files: FileUploadInterface[] = [];
+  files!: File[];
+  imagesArray: FileUploadInterface[] = [];
   onTouched!: () => void;
-  onChange!: (event: Event) => void;
+  onChange!: (event: File[]) => void;
   writeValue(obj: any): void {
     console.log({ obj });
     this.files = obj;
@@ -45,12 +46,15 @@ export class FileUploadComponent implements ControlValueAccessor {
   }
 
   onFileSelected(event: any) {
-    this.files = event.target!.files;
-    this.onChange(event);
+    const eventTarget = event!.currentTarget as HTMLInputElement;
+    this.files = Array.from(eventTarget.files!);
+    console.log('files', this.files);
+    console.log(this.files);
+    this.onChange(this.files);
     this.onTouched();
   }
 
-  removeFile(file: FileUploadInterface) {
+  removeFile(file: File) {
     console.log(this.files);
     console.log(Object.keys(this.files).filter((el) => console.log({ el })));
     console.log({ file });

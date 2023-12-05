@@ -32,7 +32,7 @@ export class AuthService {
         if (confirmSignup) {
           this.saveUseronDynamoDb(user);
         }
-        this.navigateUser(user);
+        this.navigateUser();
       })
       .catch((err) => {
         throw err;
@@ -74,11 +74,7 @@ export class AuthService {
     });
   }
 
-  private navigateUser(user: UserInterface) {
-    if (user!.attributes['custom:role'] === AppConstants.adminRole) {
-      this.router.navigate(['/admin']);
-    } else {
-      this.router.navigate(['/home']);
-    }
+  private navigateUser() {
+    this.router.navigate(['/home']);
   }
 }
